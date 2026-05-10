@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
 import { Button } from '../../components/ui/Button';
-import { MapPin, Briefcase, DollarSign, Search, Star } from 'lucide-react';
+import { MapPin, DollarSign, Search } from 'lucide-react';
 
 interface Job {
   id: string;

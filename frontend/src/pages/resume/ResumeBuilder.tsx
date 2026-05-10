@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
-import { FileText, Wand2, Download, Plus, ChevronRight } from 'lucide-react';
+import { FileText, Wand2, Download, Plus } from 'lucide-react';
 
 interface ResumeVersion {
   id: string;

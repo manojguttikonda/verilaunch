@@ -3,11 +3,12 @@ import React from 'react';
 interface CardProps {
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
 }
 
-export const Card: React.FC<CardProps> = ({ children, className = '' }) => {
+export const Card: React.FC<CardProps> = ({ children, className = '', style }) => {
   return (
-    <div className={`glass-panel p-8 ${className}`}>
+    <div className={`glass-panel p-8 ${className}`} style={style}>
       {children}
     </div>
   );

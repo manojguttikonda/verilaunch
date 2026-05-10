@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
-import { Users, Briefcase, TrendingUp, Plus, CheckCircle } from 'lucide-react';
+import { Users, Briefcase, Plus, CheckCircle } from 'lucide-react';
 
 const mockJobs = [
   { id: '1', title: 'Senior Software Engineer', applicants: 12, verified: 8, status: 'OPEN' },

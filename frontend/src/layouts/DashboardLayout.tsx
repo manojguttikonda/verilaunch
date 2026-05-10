@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
-import { Briefcase, LayoutDashboard, User, LogOut, FileText, Search, Shield, Send, Building2 } from 'lucide-react';
+import { Briefcase, User, LogOut, FileText, Search, Shield, Send, Building2 } from 'lucide-react';
 
 const navItems = [
   { to: '/jobs', icon: Search, label: 'Job Search' },
