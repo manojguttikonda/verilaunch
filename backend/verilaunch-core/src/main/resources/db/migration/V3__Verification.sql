@@ -3,7 +3,7 @@ CREATE TABLE verification_records (
     candidate_id UUID NOT NULL REFERENCES candidates(id) ON DELETE CASCADE,
     verification_type VARCHAR(100) NOT NULL,
     status VARCHAR(50) NOT NULL DEFAULT 'PENDING',
-    confidence_score NUMERIC(5,2),
+    confidence_score DOUBLE PRECISION,
     document_s3_key VARCHAR(512),
     reviewer_notes TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
