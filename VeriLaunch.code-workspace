@@ -1,0 +1,108 @@
+{
+  "folders": [
+    {
+      "name": "🏠 Root",
+      "path": "."
+    },
+    {
+      "name": "🖥️ Frontend (React + Vite)",
+      "path": "frontend"
+    },
+    {
+      "name": "☕ Backend (Java Spring Boot)",
+      "path": "backend/verilaunch-core"
+    },
+    {
+      "name": "🗄️ Database (Schema + Seeds)",
+      "path": "db"
+    },
+    {
+      "name": "🏗️ Infrastructure (Terraform AWS)",
+      "path": "infrastructure"
+    },
+    {
+      "name": "⚙️ CI/CD (.github)",
+      "path": ".github"
+    }
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "files.exclude": {
+      "**/target": true,
+      "**/.terraform": true,
+      "**/node_modules": true,
+      "**/.DS_Store": true
+    },
+    "java.project.referencedLibraries": [
+      "backend/verilaunch-core/target/**/*.jar"
+    ],
+    "editor.rulers": [120],
+    "files.associations": {
+      "*.tf": "terraform",
+      "*.hcl": "terraform"
+    },
+    "search.exclude": {
+      "**/target": true,
+      "**/node_modules": true,
+      "**/.terraform": true
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "vscjava.vscode-java-pack",
+      "hashicorp.terraform",
+      "dbaeumer.vscode-eslint",
+      "ms-azuretools.vscode-docker",
+      "mtxr.sqltools",
+      "mtxr.sqltools-driver-pg",
+      "github.vscode-github-actions",
+      "esbenp.prettier-vscode"
+    ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "java",
+        "name": "🚀 Run VeriLaunch Backend",
+        "request": "launch",
+        "mainClass": "com.verilaunch.VeriLaunchApplication",
+        "projectName": "verilaunch-core",
+        "cwd": "${workspaceFolder}/backend/verilaunch-core",
+        "env": {
+          "DB_HOST": "localhost",
+          "DB_PORT": "5432",
+          "DB_NAME": "verilaunch",
+          "DB_USER": "vladmin",
+          "DB_PASSWORD": "password"
+        }
+      }
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "🧪 Run Backend Tests",
+        "type": "shell",
+        "command": "mvn test",
+        "options": { "cwd": "${workspaceFolder}/backend/verilaunch-core" },
+        "group": "test"
+      },
+      {
+        "label": "🔨 Build Backend",
+        "type": "shell",
+        "command": "mvn clean package -DskipTests",
+        "options": { "cwd": "${workspaceFolder}/backend/verilaunch-core" },
+        "group": "build"
+      },
+      {
+        "label": "🐳 Start Full Stack (Docker)",
+        "type": "shell",
+        "command": "docker-compose up -d",
+        "options": { "cwd": "${workspaceFolder}" }
+      }
+    ]
+  }
+}

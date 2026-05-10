@@ -1,0 +1,69 @@
+version: '3.9'
+
+services:
+  # ─────────────────────────
+  # PostgreSQL Database
+  # ─────────────────────────
+  postgres:
+    image: postgres:15-alpine
+    container_name: verilaunch-postgres
+    environment:
+      POSTGRES_DB: verilaunch
+      POSTGRES_USER: vladmin
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/seeds/dev_seed.sql:/docker-entrypoint-initdb.d/01_seed.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vladmin -d verilaunch"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─────────────────────────
+  # Java Spring Boot Backend
+  # ─────────────────────────
+  backend:
+    build:
+      context: ./backend/verilaunch-core
+      dockerfile: Dockerfile
+    container_name: verilaunch-backend
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: verilaunch
+      DB_USER: vladmin
+      DB_PASSWORD: password
+      JWT_SECRET: ${JWT_SECRET:-dmVyaWxhdW5jaC1zdXBlci1zZWNyZXQta2V5LWZvci1sb2NhbC1kZXZlbG9wbWVudC1vbmx5LWNoYW5nZS1pbi1wcm9k}
+      LOG_LEVEL: INFO
+      SHOW_SQL: "false"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://localhost:8080/actuator/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # ─────────────────────────
+  # React Frontend (via Nginx)
+  # ─────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: verilaunch-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
